@@ -1,0 +1,76 @@
+cabal-version:      3.0
+
+name:               template
+
+-- The package version.
+-- See the Haskell package versioning policy (PVP) for standards
+-- guiding when and how versions should be incremented.
+-- https://pvp.haskell.org
+-- PVP summary:     +-+------- breaking API changes
+--                  | | +----- non-breaking API additions
+--                  | | | +--- code changes with no API change
+version:            0.1.0.0
+
+license:            LGPL-3.0-or-later
+
+license-file:       LICENSE
+
+author:             Kaptch
+
+maintainer:         kaptch@gmail.com
+
+category:           Language
+build-type:         Custom
+
+custom-setup
+  setup-depends:     Cabal
+                   , base
+                   , process
+
+extra-doc-files:    CHANGELOG.md
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+
+    exposed-modules:
+
+    other-modules:
+
+    build-depends:    base
+
+    hs-source-dirs:   src
+
+    default-language: Haskell2010
+
+    default-extensions:
+      OverloadedStrings
+
+executable template
+    import:           warnings
+
+    main-is:          Main.hs
+
+    build-depends:    base
+                    , template
+
+    hs-source-dirs:   app
+
+    default-language: Haskell2010
+
+test-suite template-test
+    import:           warnings
+
+    default-language: Haskell2010
+
+    type:             exitcode-stdio-1.0
+
+    hs-source-dirs:   test
+
+    main-is:          Main.hs
+
+    build-depends:
+        base
+      , template

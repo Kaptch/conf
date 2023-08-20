@@ -1,0 +1,4 @@
+name: template
+include: . cubical
+depend: standard-library
+flags:

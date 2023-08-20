@@ -1,0 +1,13 @@
+name = "Minecraft Mods"
+author = "Kaptch"
+version = "0.0.1"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "d4729ea67756474116c29714cf5dd5fadb3c1f2e7c9dc535ac5b1390eee5ef9a"
+
+[versions]
+fabric = "0.14.22"
+minecraft = "1.19.2"

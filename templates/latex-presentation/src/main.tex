@@ -1,0 +1,62 @@
+\documentclass[10pt]{beamer}
+
+\usepackage{listings,comment}
+\usepackage{amsfonts,amsmath,stmaryrd}
+\usepackage{amsthm}
+\usepackage{mathpartir}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{macro}
+
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+\newcommand{\highlight}[1]{%
+  \colorbox{red!50}{$\displaystyle#1$}}
+\makeatletter
+\def\@Aboxed#1&#2\ENDDNE{%
+  \settowidth\@tempdima{$\displaystyle#1{}$}%
+  \addtolength\@tempdima{\fboxsep}%
+  \addtolength\@tempdima{\fboxrule}%
+  \global\@tempdima=\@tempdima
+  \kern\@tempdima
+  &
+  \kern-\@tempdima
+  \fcolorbox{red}{yellow}{$\displaystyle #1#2$}
+}
+\makeatother
+\newcommand{\tikzmark}[1]{%
+  \tikz[overlay,remember picture,baseline] \node [anchor=base] (#1) {};}
+
+\newbox\FBox
+\NewDocumentCommand\Highlight{O{black}O{white}mO{0.5pt}O{0pt}O{0pt}}{%
+    \setlength\fboxsep{#4}\sbox\FBox{\fcolorbox{#1}{#2}{#3\rule[-#5]{0pt}{#6}}}\usebox\FBox}
+
+\usetheme{Copenhagen}
+
+\title{Template}
+
+\author[Sergei Stepanenko]
+{Sergei Stepanenko}
+
+\institute[AU]
+{
+  \inst{1}
+  Aarhus University
+}
+
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
