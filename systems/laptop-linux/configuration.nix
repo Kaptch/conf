@@ -152,7 +152,8 @@ in
         enable = true;
         settings = {
           default_session = {
-            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --cmd Hyprland";
+            # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --cmd Hyprland";
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --cmd sway";
             user = "kaptch";
           };
         };
@@ -184,8 +185,8 @@ in
 
       nixpkgs.config.allowUnfree = true;
 
-      # programs.sway.enable = true;
-      programs.hyprland.enable = true;
+      programs.sway.enable = true;
+      # programs.hyprland.enable = true;
 
       programs.nix-ld.enable = true;
 
@@ -195,14 +196,15 @@ in
 
       services.flatpak.enable = true;
 
-      # xdg.portal = {
-      #   enable = true;
-      #   wlr.enable = true;
-      #   extraPortals = with pkgs; [
-      #     xdg-desktop-portal-wlr
-      #     xdg-desktop-portal-gtk
-      #   ];
-      # };
+      # comment to use hyprland
+      xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-wlr
+          xdg-desktop-portal-gtk
+        ];
+      };
 
       hardware.ledger.enable = true;
       services.udev.extraRules = ''

@@ -59,8 +59,7 @@
       };
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.27.2";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:hyprwm/Hyprland";
     };
     nur.url = "github:nix-community/NUR";
     nix-ld = {
@@ -149,6 +148,8 @@
             "steam-run"
             "steam"
             "zoom"
+            "vscode-extension-github-codespaces"
+            "vscode-extension-ms-vsliveshare-vsliveshare"
           ];
           overlays = [
             # unstable.*
@@ -234,8 +235,10 @@
               ({modulesPath, ... }: {
                 imports = server_base.modules;
               })
-              # (inputs.nixpkgs + "/nixos/maintainers/scripts/openstack/openstack-image.nix")
               (inputs.nixpkgs + "/nixos/modules/virtualisation/openstack-config.nix")
+              {
+                boot.loader.grub.device = local.lib.mkForce "/dev/xvda";
+              }
             ];
           };
           phone-cross = inputs.nixpkgs-mobile.lib.nixosSystem {
@@ -324,7 +327,20 @@
             ];
           };
 
-          openstack = self.nixosConfigurations.minecraft-server.config.system.build.openstackImage;
+          rpi3 = inputs.nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            pkgs = (import-pkgs "aarch64-linux");
+            specialArgs.inputs = inputs;
+            format = "sd-aarch64";
+            modules = [
+              ({modulesPath, ... }: {
+                imports = server_base.modules ++ [
+                  ./systems/gateway-server/configuration.nix
+                  ./systems/rpi3/configuration.nix
+                ];
+              })
+            ];
+          };
 
           install-iso = inputs.nixos-generators.nixosGenerate {
             system = "x86_64-linux";
@@ -354,7 +370,7 @@
 
           modpack = inputs.packwiz2nix.lib.mkMultiMCPack {
             pkgs = (import-pkgs "x86_64-linux");
-            mods = inputs.packwiz2nix.lib.mkPackwizPackages (import-pkgs "x86_64-linux") ./misc/minecraft-mods/checksums.json;
+            mods = inputs.packwiz2nix.lib.mkPackwizPackages (import-pkgs "x86_64-linux") ./misc/minecraft-mods-simple/checksums.json;
             name = "modpack";
           };
         };

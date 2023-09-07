@@ -821,6 +821,19 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 
 (use-package dune)
 
+(use-package merlin
+  :config
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'merlin-mode-hook #'company-mode)
+  (setq merlin-error-after-save nil))
+
+(use-package merlin-eldoc
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+(use-package flycheck-ocaml
+  :config
+  (flycheck-ocaml-setup))
+
 (use-package utop
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
@@ -1557,20 +1570,7 @@ It will setup BibTeX to store keys in an auto file."
     (lambda ()
       (getenv "OPENAI_API_KEY")))))
 
-;; (use-package codegpt
-;;   :custom
-;;   (codegpt (getenv "OPENAI_API_KEY"))
-;;   (codegpt-focus-p nil))
-
-;; (use-package ujelly-theme
-;;   :config
-;;   (load-theme 'ujelly t))
-
-;; (if (daemonp)
-;;     (add-hook 'after-make-frame-functions
-;; 	      (lambda (frame)
-;; 		(with-selected-frame frame (load-theme 'ujelly t))))
-;;   (load-theme 'ujelly t))
+(use-package elcord)
 
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()

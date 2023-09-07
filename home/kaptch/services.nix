@@ -211,6 +211,7 @@
         outputs = [
           {
             criteria = "eDP-1";
+            status = "disable";
           }
           {
             criteria = "HDMI-A-1";
@@ -230,6 +231,15 @@
     musicDirectory = "/home/kaptch/Music";
   };
 
+  services.mpd-discord-rpc.enable = true;
+
+  services.mpdris2 = {
+    enable = true;
+    notifications = true;
+  };
+
+  services.mpris-proxy.enable = true;
+
   programs.beets = {
     enable = true;
     settings = {
@@ -243,26 +253,45 @@
     };
   };
 
-  programs.wofi = {
+  programs.fuzzel = {
     enable = true;
     settings = {
-      width = 600;
-      height = 300;
-      location = "center";
-      show = "run";
-      prompt = "Search...";
-      filter_rate = 100;
-      allow_markup = true;
-      no_actions = true;
-      halign = "fill";
-      orientation = "vertical";
-      content_halign = "fill";
-      insensitive = true;
-      allow_images = true;
-      image_size = 40;
-      gtk_dark = true;
+      main = {
+        terminal = "${pkgs.alacritty}/bin/alacritty";
+        layer = "overlay";
+      };
+      colors = {
+        background = "000000AA";
+        text = "efefefef";
+        match = "fabd2fff";
+        selection-match = "fabd2fff";
+        selection = "666666ff";
+        selection-text = "efefefef";
+        border = "33eeffee";
+      };
     };
   };
+
+  # programs.wofi = {
+  #   enable = true;
+  #   settings = {
+  #     width = 600;
+  #     height = 300;
+  #     location = "center";
+  #     show = "run";
+  #     prompt = "Search...";
+  #     filter_rate = 100;
+  #     allow_markup = true;
+  #     no_actions = true;
+  #     halign = "fill";
+  #     orientation = "vertical";
+  #     content_halign = "fill";
+  #     insensitive = true;
+  #     allow_images = true;
+  #     image_size = 40;
+  #     gtk_dark = true;
+  #   };
+  # };
 
   services.blueman-applet = {
     enable = true;

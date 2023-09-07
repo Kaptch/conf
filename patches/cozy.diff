@@ -1,0 +1,17 @@
+diff --git a/cozy/ui/widgets/whats_new_window.py b/cozy/ui/widgets/whats_new_window.py
+index 1e80d1ef..da3a06f9 100644
+--- a/cozy/ui/widgets/whats_new_window.py
++++ b/cozy/ui/widgets/whats_new_window.py
+@@ -51,9 +51,9 @@ def __init__(self, **kwargs):
+     def _fill_window(self):
+         self.children = []
+ 
+-        last_launched_version = version.parse(self.app_settings.last_launched_version)
+-
+-        if type(last_launched_version) is version.LegacyVersion:
++        try:
++            last_launched_version = version.parse(self.app_settings.last_launched_version)
++        except version.InvalidVersion:
+             self._fill_welcome()
+         else:
+             self._fill_whats_new(last_launched_version)

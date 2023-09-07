@@ -25,14 +25,17 @@
         "custom/cal"
       ];
       modules-left = [
-        "wlr/workspaces"
-        "hyprland/language"
+        # "wlr/workspaces"
+        # "hyprland/language"
+        "sway/workspaces"
+        "sway/language"
+        "sway/mode"
         "custom/mpd1"
         "mpd"
         "custom/mpd2"
         "cava"
         "gamemode"
-        "custom/screen"
+        # "custom/screen"
         "custom/elinks"
         "custom/neomutt"
         "custom/profanity"
@@ -208,11 +211,11 @@
         format = "{}% ";
         on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.btop}/bin/btop -p 1";
       };
-      "custom/screen" = {
-        format = "⃢";
-        tooltip = false;
-        on-click = "${pkgs.wdisplays}/bin/wdisplays";
-      };
+      # "custom/screen" = {
+      #   format = "⃢";
+      #   tooltip = false;
+      #   on-click = "${pkgs.wdisplays}/bin/wdisplays";
+      # };
       disk = {
         interval = 30;
         format = "{percentage_free}% 🖴";

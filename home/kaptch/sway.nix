@@ -13,7 +13,7 @@ in
     '';
     config = {
       terminal = "alacritty";
-      menu = "bemenu-run";
+      menu = "fuzzel";
       modifier = "Mod4";
       bars = [ ];
       startup = [
@@ -35,17 +35,17 @@ in
             "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
             "${sway-cfg.modifier}+p" = "exec ${pkgs.wdisplays}/bin/wdisplays";
             "${sway-cfg.modifier}+t" = "exec dbus-send --type=method_call --dest=io.crow_translate.CrowTranslate /io/crow_translate/CrowTranslate/MainWindow io.crow_translate.CrowTranslate.MainWindow.translateSelection";
-            "${sway-cfg.modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy";
+            "${sway-cfg.modifier}+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
 	          "${sway-cfg.modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save screen ${screenshot_dir}";
             "${sway-cfg.modifier}+Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area ${screenshot_dir}";
-            "${sway-cfg.modifier}+Shift+a" = "exec nwggrid";
+            "${sway-cfg.modifier}+Shift+a" = "exec pkill -9 nwggrid || ${pkgs.nwg-drawer}/bin/nwg-drawer";
             "${sway-cfg.modifier}+x" = "exec emacsclient -c";
           };
     };
     # swaybg_command oguri -c ~/.config/oguri/config
     extraConfig = ''
       set $laptop eDP-1
-      set $lock '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
+      set $lock '${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2'
       bindswitch --reload --locked lid:on output $laptop disable
       bindswitch --reload --locked lid:off output $laptop enable
       set $wallpapers_path $HOME/Pictures/wallpapers

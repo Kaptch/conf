@@ -7,7 +7,7 @@ in
     enable = true;
     xwayland = {
       enable = true;
-      hidpi = false;
+      # hidpi = false;
     };
     systemdIntegration = true;
     extraConfig = ''
@@ -34,7 +34,7 @@ in
     misc {
       disable_hyprland_logo = true
     	disable_splash_rendering = true
-      suppress_portal_warnings = 1
+      # suppress_portal_warnings = 1
       disable_autoreload = true
       # disable dragging animation
       animate_mouse_windowdragging = false
@@ -66,21 +66,26 @@ in
     general {
       gaps_in = 2
       gaps_out = 2
+      # border_size = 1
+      # col.active_border = rgb(0000ff) rgb(e0b0ff) 270deg
+      # col.inactive_border = rgb(b7410e) rgb(e6e6fa) 270deg
+      # col.group_border_active = rgb(ffc0cb)
+      # col.group_border = rgb(7f2980)
       border_size = 1
-      col.active_border = rgb(0000ff) rgb(e0b0ff) 270deg
-      col.inactive_border = rgb(b7410e) rgb(e6e6fa) 270deg
-
-      # group borders
-      col.group_border_active = rgb(ffc0cb)
-      col.group_border = rgb(7f2980)
+      col.active_border = rgba(e5b9c6ff) rgba(c293a3ff) 45deg
+      col.inactive_border = 0xff382D2E
+      no_border_on_floating = false
     }
 
     decoration {
       rounding = 8
-      blur = true
-      blur_size = 3
-      blur_passes = 3
-      blur_new_optimizations = true
+
+      blur {
+        enabled = true
+        size = 3
+        passes = 3
+        # new_optimizations = true
+      }
 
       drop_shadow = true
       shadow_ignore_window = true
@@ -154,12 +159,13 @@ in
     bind = $mod, T, togglefloating,
     bind = $mod, O, pseudo,
     bind = $mod ALT, ,resizeactive,
+    bind = $mod, P, pin,
 
     # utility
     # launcher
     bindr = $mod SHIFT, A, exec, pkill -9 nwggrid || ${pkgs.nwg-drawer}/bin/nwg-drawer
     # launcher
-    bindr = $mod, D, exec, pkill -9 wofi || ${pkgs.wofi}/bin/wofi
+    bindr = $mod, D, exec, pkill -9 fuzzel; ${pkgs.fuzzel}/bin/fuzzel
     # terminal
     bind = $mod, Return, exec, ${pkgs.alacritty}/bin/alacritty
     # lock screen
@@ -168,8 +174,6 @@ in
     bind = $mod, X, exec, emacsclient -c
     # file manager
     bind = $mod, E, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.nnn}/bin/nnn
-    # displays
-    bind = $mod, P, exec, ${pkgs.wdisplays}/bin/wdisplays
     # screenshots
     bind = $mod, Print, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save screen ${screenshot_dir}
     bind = $mod SHIFT, Print, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area ${screenshot_dir}
@@ -177,11 +181,6 @@ in
     bind = $mod, M, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.ncmpcpp}/bin/ncmpcpp
     # gamemode
     bind = $mod, F1, exec, hyprland-gamemode-toggle
-    # apps
-    bind = $mod CTRL, 1, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.elinks}/bin/elinks
-    bind = $mod CTRL, 2, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.neomutt}/bin/neomutt
-    bind = $mod CTRL, 3, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.irssi}/bin/irssi
-    bind = $mod CTRL, 4, exec, ${pkgs.alacritty}/bin/alacritty -e ${pkgs.profanity}/bin/profanity
 
     # move focus
     bind = $mod, left, movefocus, l
@@ -207,8 +206,7 @@ in
     submap = reset
 
     # media controls
-    bindl = , XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play
-    bindl = , XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl pause
+    bindl = , XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause
 
     # volume
     bindle = , XF86AudioRaiseVolume, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -240,9 +238,13 @@ in
     # cycle workspaces
     bind = $mod, bracketleft, workspace, m-1
     bind = $mod, bracketright, workspace, m+1
-    # cycle monitors
-    bind = $mod SHIFT, braceleft, focusmonitor, l
-    bind = $mod SHIFT, braceright, focusmonitor, r
+
+    bind = $mod CONTROL, period, focusmonitor, +1
+
+    # trigger when the lid is up
+    bindl=,switch:off:Lid Switch,exec,hyprctl dispatch dpms on eDP-1
+    # trigger when the lid is down
+    bindl=,switch:on:Lid Switch,exec,hyprctl dispatch dpms off eDP-1
   '';
   };
 }

@@ -27,6 +27,7 @@ let
       gentium-tug
       ifmtarg
       iftex
+      minted
       pbox
       scalerel
       totpages
@@ -106,8 +107,8 @@ in
       ./alacritty.nix
       ./obs.nix
       ./waybar.nix
-      ./hyprland.nix
-      # ./sway.nix
+      # ./hyprland.nix
+      ./sway.nix
       ./services.nix
       ./vim.nix
       ./wlogout.nix
@@ -120,10 +121,10 @@ in
 
   programs.browserpass.enable = true;
 
-  programs.opam = {
-    enable = true;
-    enableBashIntegration = true;
-  };
+  # programs.opam = {
+  #   enable = true;
+  #   enableBashIntegration = true;
+  # };
 
   programs.zathura = {
     enable = true;
@@ -157,14 +158,14 @@ in
     enableUpdateCheck = false;
     enableExtensionUpdateCheck = false;
     extensions = with pkgs.vscode-extensions; [
-      # github.codespaces
+      github.codespaces
       # github.copilot
       matklad.rust-analyzer
       mkhl.direnv
       kahole.magit
       vadimcn.vscode-lldb
       bungcip.better-toml
-      # ms-vsliveshare.vsliveshare
+      ms-vsliveshare.vsliveshare
       ocamllabs.ocaml-platform
       james-yu.latex-workshop
       dracula-theme.theme-dracula
@@ -292,29 +293,32 @@ in
   home.username = "kaptch";
   home.homeDirectory = "/home/kaptch";
   home.packages = with pkgs; [
+    zeroad
     inputs.comma.packages."${system}".default
-    # agda
-    # aircrack-ng
+    agda
+    aircrack-ng
     alacritty
-    # anki-bin
-    # ardour
+    anki-bin
+    ardour
     baobab
-    # bettercap
+    bettercap
     binutils
-    # bitwarden
-    # bitwarden-cli
+    bitwarden
+    bitwarden-cli
     bitcoin
-    # blender
+    blender
     brightnessctl
     btop
     cage
-    # cataclysm-dda
+    cataclysm-dda
     cava
     # TODO: config
     # ~/.config/calibre
     # calibre
     chromium
     clippy
+    cozy
+    crawlTiles
     crow-translate
     cutter
     davmail
@@ -323,7 +327,7 @@ in
     discord
     docker-compose
     dsniff
-    # element-desktop
+    element-desktop
     elinks
     emacs-all-the-icons-fonts
     erlang-ls
@@ -331,13 +335,13 @@ in
     (ffmpeg.override {
       withV4l2 = true;
     })
-    firefox-wayland
+    firefox
     font-awesome
     # freecad
     gamemode
     gamescope
     gh
-    # ghidra
+    ghidra
     gimp
     gnome3.adwaita-icon-theme
     gnumake
@@ -348,7 +352,7 @@ in
     grim
     gtk-layer-shell
     gtklp
-    # guitarix
+    guitarix
     haskell-language-server
     hyprpicker
     hyprland-gamemode-toggle
@@ -363,8 +367,8 @@ in
     jetbrains.idea-community
     jdk
     kanshi
-    # kicad-small
-    # kismet
+    kicad-small
+    kismet
     khal
     ledger-live-desktop
     # libreoffice
@@ -374,7 +378,8 @@ in
     mattermost-desktop
     mattermost-fix
     meson
-    # metasploit
+    metasploit
+    minetest
     mkchromecast
     monero-gui
     monero-cli
@@ -409,6 +414,7 @@ in
     patchelf
     pavucontrol
     pcmanfm
+    pioneer
     pidgin-with-plugins
     pinentry-gtk2
     pkg-config
@@ -422,7 +428,7 @@ in
     # prusa-slicer
     pulseaudio
     pwgen
-    # python-with-my-packages
+    python-with-my-packages
     qbittorrent
     qemu
     qtpass
@@ -434,7 +440,7 @@ in
     sbcl
     sc-im
     screenfetch
-    # signal-desktop
+    signal-desktop
     sharing
     slurp
     solc
@@ -452,9 +458,7 @@ in
     thunderbird-wayland
     tmux
     tor
-    (tor-browser-bundle-bin.override {
-      useHardenedMalloc = false;
-    })
+    tor-browser-bundle-bin
     typst
     typst-lsp
     typst-fmt
@@ -466,6 +470,7 @@ in
     virt-manager
     vlc
     wdisplays
+    wesnoth
     wev
     weylus
     material-design-icons
@@ -482,7 +487,7 @@ in
     wlogout
     xdg-desktop-portal-hyprland
     xdg-utils
-    # xoscope
+    xoscope
     xwayland
     vulkan-tools
     xz
