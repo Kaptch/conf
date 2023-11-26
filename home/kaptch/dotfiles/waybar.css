@@ -74,6 +74,7 @@ window#waybar.hidden {
 #custom-irssi,
 #custom-newsboat,
 #custom-recording,
+#custom-mirror,
 #custom-cal,
 #bluetooth {
     background: #1a1a1a;
@@ -91,6 +92,15 @@ window#waybar.hidden {
 }
 
 #custom-recording.enabled {
+    background: #1a1a1a;
+    padding: 0 8px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    border-radius: 90px;
+    background-clip: padding-box;
+    color: red;
+}
+
+#custom-mirror.enabled {
     background: #1a1a1a;
     padding: 0 8px;
     border: 3px solid rgba(0, 0, 0, 0);

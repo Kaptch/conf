@@ -211,10 +211,14 @@
             pkgs = (import-pkgs server_base.system);
             specialArgs = { inherit inputs; };
             modules = [
-              ./systems/gateway-server/configuration.nix
+              ./systems/main-server/configuration.nix
               ({modulesPath, ... }: {
                 imports = server_base.modules;
               })
+              (inputs.nixpkgs + "/nixos/modules/virtualisation/openstack-config.nix")
+              {
+                boot.loader.grub.device = local.lib.mkForce "/dev/xvda";
+              }
               # ./disks/simple.nix
               # {
               #   _module.args.disks = "/dev/sda";
@@ -239,6 +243,28 @@
               {
                 boot.loader.grub.device = local.lib.mkForce "/dev/xvda";
               }
+            ];
+          };
+          rpi3 = inputs.nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            # pkgs =
+            #   let s = (import-pkgs "aarch64-linux");
+            #   in (system: {
+            #     system.nixpkgs.overlays =
+            #       ((final: super: {
+            #         makeModulesClosure = x:
+            #           super.makeModulesClosure (x // { allowMissing = true; });
+            #       }));
+            #   }) s;
+            pkgs = (import-pkgs "aarch64-linux");
+            specialArgs.inputs = inputs;
+            modules = [
+              ({modulesPath, ... }: {
+                imports = server_base.modules ++ [
+                  ./systems/rpi3/configuration.nix
+                ];
+              })
+              (inputs.nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
             ];
           };
           phone-cross = inputs.nixpkgs-mobile.lib.nixosSystem {
@@ -327,21 +353,6 @@
             ];
           };
 
-          rpi3 = inputs.nixos-generators.nixosGenerate {
-            system = "aarch64-linux";
-            pkgs = (import-pkgs "aarch64-linux");
-            specialArgs.inputs = inputs;
-            format = "sd-aarch64";
-            modules = [
-              ({modulesPath, ... }: {
-                imports = server_base.modules ++ [
-                  ./systems/gateway-server/configuration.nix
-                  ./systems/rpi3/configuration.nix
-                ];
-              })
-            ];
-          };
-
           install-iso = inputs.nixos-generators.nixosGenerate {
             system = "x86_64-linux";
             pkgs = (import-pkgs "x86_64-linux");
@@ -370,7 +381,7 @@
 
           modpack = inputs.packwiz2nix.lib.mkMultiMCPack {
             pkgs = (import-pkgs "x86_64-linux");
-            mods = inputs.packwiz2nix.lib.mkPackwizPackages (import-pkgs "x86_64-linux") ./misc/minecraft-mods-simple/checksums.json;
+            mods = inputs.packwiz2nix.lib.mkPackwizPackages (import-pkgs "x86_64-linux") ./misc/minecraft-mods-custom/checksums.json;
             name = "modpack";
           };
         };
@@ -415,7 +426,7 @@
         };
 
         apps."x86_64-linux" = {
-          generate-checksums = inputs.packwiz2nix.lib.mkChecksumsApp (import-pkgs "x86_64-linux") ./misc/minecraft-mods/mods;
+          generate-checksums = inputs.packwiz2nix.lib.mkChecksumsApp (import-pkgs "x86_64-linux") ./misc/minecraft-mods-custom/mods;
         };
 
         devShells."x86_64-linux".default = (import-pkgs "x86_64-linux").mkShell {

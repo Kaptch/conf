@@ -11,6 +11,7 @@
       ssh = "gpg-connect-agent updatestartuptty /bye > /dev/null; ssh";
       scp = "gpg-connect-agent updatestartuptty /bye > /dev/null; scp";
       eledger = "gpg --batch -d -q $LEDGER_FILE | ledger -f -";
+      n = "nnn -Ude";
     };
     bashrcExtra = "gpg-connect-agent updatestartuptty /bye > /dev/null\n";
   };

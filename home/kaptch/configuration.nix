@@ -115,7 +115,7 @@ in
       ./zathura.nix
     ];
 
-  programs.home-manager.enable = true;
+  # programs.home-manager.enable = true;
 
   programs.gpg.enable = true;
 
@@ -130,10 +130,10 @@ in
     enable = true;
   };
 
-  programs.go = {
-    enable = true;
-    package = pkgs.go_1_18;
-  };
+  # programs.go = {
+  #   enable = true;
+  #   package = pkgs.go_1_18;
+  # };
 
   programs.direnv = {
     enable = true;
@@ -366,6 +366,7 @@ in
     ispell
     jetbrains.idea-community
     jdk
+    jq
     kanshi
     kicad-small
     kismet
@@ -392,7 +393,7 @@ in
     ncoqPackages.equations
     ncoqPackages.iris
     ncoqPackages.mathcomp-ssreflect
-    ncoqPackages.metacoq
+    # ncoqPackages.metacoq
     # ncoqPackages.metacoq-pcuic
     ncoqPackages.serapi
     ncoqPackages.stdpp
@@ -417,6 +418,7 @@ in
     pioneer
     pidgin-with-plugins
     pinentry-gtk2
+    pipectl
     pkg-config
     playerctl
     pmbootstrap
@@ -448,6 +450,7 @@ in
     steam-with-pkgs
     steam-session
     steam-run
+    sshfs
     sway-contrib.grimshot
     swayidle
     swaylock-fancy
@@ -456,6 +459,7 @@ in
     tdesktop
     tex
     thunderbird-wayland
+    tikzit
     tmux
     tor
     tor-browser-bundle-bin
@@ -484,11 +488,13 @@ in
     wireguard-tools
     wireshark
     wl-clipboard
+    wl-mirror
     wlogout
     xdg-desktop-portal-hyprland
     xdg-utils
     xoscope
     xwayland
+    xwaylandvideobridge
     vulkan-tools
     xz
     youtube-dl
@@ -499,6 +505,28 @@ in
     yubioath-flutter
     zoom-us
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+    associations.added = {
+      "text/plain" = ["emacsclient.desktop"];
+      "text/markdown" = ["emacsclient.desktop"];
+      "application/pdf" = ["org.pwmt.zathura.desktop"];
+      "image/*" = ["imv-dir.desktop"];
+      "image/png" = ["imv-dir.desktop"];
+      "video/*" = ["mpv.desktop"];
+      "audio/*" = ["mpv.desktop"];
+    };
+    defaultApplications = {
+      "text/plain" = ["emacsclient.desktop"];
+      "text/markdown" = ["emacsclient.desktop"];
+      "application/pdf" = ["org.pwmt.zathura.desktop"];
+      "image/*" = ["imv-dir.desktop"];
+      "image/png" = ["imv-dir.desktop"];
+      "video/*" = ["mpv.desktop"];
+      "audio/*" = ["mpv.desktop"];
+    };
+  };
 
   xdg.mimeApps.defaultApplications = {
     "application/x-extension-htm" = "firefox.desktop";
@@ -607,8 +635,8 @@ in
   };
   gtk = {
     enable = true;
-    cursorTheme.package = pkgs.bibata-cursors;
-    cursorTheme.name = "Bibata-Original-Ice";
-    cursorTheme.size = 24;
+    # cursorTheme.package = pkgs.bibata-cursors;
+    # cursorTheme.name = "Bibata-Original-Ice";
+    # cursorTheme.size = 24;
   };
 }

@@ -224,6 +224,13 @@ in
           "fdc9:281f:04d7:9ee9::4/128"
         ];
       }
+      {
+        publicKey = "ANYhkcvSg6KICW3KMJBBDIhB35rLCDgX/RCHV92slnE=";
+        allowedIPs = [
+          "10.8.0.5/32"
+          "fdc9:281f:04d7:9ee9::5/128"
+        ];
+      }
     ];
   };
 
@@ -502,9 +509,9 @@ in
   services.openssh = {
     enable = true;
     allowSFTP = true;
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
-    permitRootLogin = lib.mkOverride 98 "no";
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+    settings.PermitRootLogin = lib.mkOverride 98 "no";
     extraConfig = ''
       AllowTcpForwarding yes
       X11Forwarding no

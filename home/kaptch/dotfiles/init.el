@@ -811,6 +811,10 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   :init
   (global-company-mode))
 
+(use-package company-lsp
+  :commands company-lsp
+  :config (push 'company-lsp company-backends))
+
 (use-package tuareg
   :commands (camldebug tuareg-imenu-set-imenu)
   :custom
@@ -836,7 +840,8 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 
 (use-package utop
   :config
-  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+  (add-hook 'tuareg-mode-hook #'utop-minor-mode)
+  (setq utop-command "dune utop . -- -emacs"))
 
 (use-package emacs
   :init
@@ -1561,6 +1566,29 @@ It will setup BibTeX to store keys in an auto file."
 
 (use-package typst-mode
   :straight (:type git :host github :repo "Ziqi-Yang/typst-mode.el"))
+
+;; (use-package ccls
+;;   :hook ((c-mode c++-mode objc-mode cuda-mode) .
+;;          (lambda () (require 'ccls) (lsp)))
+;;   :hook ((c-mode c++-mode) . (lambda () (company-mode)))
+;;   :config
+;;   (setq ccls-executable "ccls")
+;;   )
+
+(use-package ccls
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (add-to-list 'lsp-enabled-clients 'ccls)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
+;; (use-package eglot
+;;   :config
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;;   (add-hook 'c-mode-hook 'eglot-ensure)
+;;   (add-hook 'c++-mode-hook 'eglot-ensure))
 
 (use-package chatgpt-shell
   :requires shell-maker

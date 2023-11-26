@@ -1,0 +1,13 @@
+name = "Create: Steam 'n' Rails"
+filename = "Steam_Rails-1.5.0+fabric-mc1.19.2-build.14.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/ZzjhlDgM/versions/eYUb7Azi/Steam_Rails-1.5.0%2Bfabric-mc1.19.2-build.14.jar"
+hash-format = "sha1"
+hash = "3a97006ffb15dfc4d6319b0c6bcbc15271204885"
+
+[update]
+[update.modrinth]
+mod-id = "ZzjhlDgM"
+version = "eYUb7Azi"

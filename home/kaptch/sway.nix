@@ -15,10 +15,10 @@ in
       terminal = "alacritty";
       menu = "fuzzel";
       modifier = "Mod4";
-      bars = [ ];
+      bars = [ { command = "waybar"; } ];
       startup = [
         # { command = "mako"; }
-        { command = "waybar"; }
+        # { command = "waybar"; }
       ];
       bindkeysToCode = true;
       keybindings =
@@ -40,6 +40,8 @@ in
             "${sway-cfg.modifier}+Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area ${screenshot_dir}";
             "${sway-cfg.modifier}+Shift+a" = "exec pkill -9 nwggrid || ${pkgs.nwg-drawer}/bin/nwg-drawer";
             "${sway-cfg.modifier}+x" = "exec emacsclient -c";
+            "${sway-cfg.modifier}+e" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.nnn}/bin/nnn";
+            "${sway-cfg.modifier}+m" = "output * bg `find $HOME/Pictures/wallpapers -type f | shuf -n 1` fill";
           };
     };
     # swaybg_command oguri -c ~/.config/oguri/config
@@ -51,7 +53,10 @@ in
       set $wallpapers_path $HOME/Pictures/wallpapers
       output * bg #000000 solid_color
       output * bg `find $wallpapers_path -type f | shuf -n 1` fill
-      default_border none
+      default_border pixel 1
+      default_floating_border pixel 1
+      client.focused "#9f1209" "#9f1209" "#ffffff" "#9f1209"
+      mouse_warping container
       # set $opacity 0.9
       # for_window [class=".*"] opacity $opacity
       # for_window [app_id=".*"] opacity $opacity
@@ -65,6 +70,7 @@ in
       for_window [window_role="dialog"] floating enable
       for_window [window_type="dialog"] floating enable
       for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set width 1030 height 710
+      # for_window [class="xwaylandvideobridge"] opacity 0.0, floating enable
       input type:keyboard {
         xkb_layout us,dk,ru
         xkb_variant qwerty

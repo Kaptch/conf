@@ -2,12 +2,14 @@
 {
   # systemd.user.services.waybar = {
   #   Unit = {
-  #     PartOf = lib.mkForce [ "hyprland-session.target" ];
-  #     After = lib.mkForce [ "hyprland-session.target" ];
+  #     PartOf = lib.mkForce [ "sway-session.target" ];
+  #     After = lib.mkForce [ "sway-session.target" ];
   #   };
-  #   # Service = {
-  #   #   ExecStart = lib.mkForce ''LC_TIME="en_GB.UTF-8" ${waybar_patch}/bin/waybar -l debug'';
-  #   # };
+  #   Service = {
+  #     ExecStart = lib.mkForce ''${pkgs.waybar}/bin/waybar -l debug'';
+  #     # Environment = "PATH=$PATH:${lib.makeBinPath [ pkgs.procps pkgs.wf-recorder ]}";
+  #     # LC_TIME="en_GB.UTF-8"
+  #   };
   # };
 
   programs.waybar = {
@@ -15,6 +17,7 @@
     package = pkgs.waybar;
     # package = waybar_patch;
     # systemd.enable = true;
+    # systemd.target = "sway-session.target";
     # systemd.target = "hyprland-session.target";
     style = lib.readFile ./dotfiles/waybar.css;
     settings = [{
@@ -22,7 +25,8 @@
       layer = "top";
       position = "top";
       modules-center = [
-        "custom/cal"
+        # "custom/cal"
+        "clock"
       ];
       modules-left = [
         # "wlr/workspaces"
@@ -42,6 +46,7 @@
         "custom/irssi"
         "custom/newsboat"
         "custom/recording"
+        "custom/mirror"
       ];
       modules-right = [
         "tray"
@@ -119,6 +124,13 @@
         return-type = "json";
         exec = "if [ $(${pkgs.procps}/bin/pidof wf-recorder > /dev/null && echo true) ]; then printf '{\"text\":\"\",\"class\":\"enabled\"}' ; else printf '{\"text\":\"\"}' ; fi";
         on-click = "if [ $(${pkgs.procps}/bin/pidof wf-recorder > /dev/null && echo true) ]; then pkill -9 wf-recorder; else yes | wf-recorder -t --muxer=v4l2 --codec=rawvideo --pixel-format=yuv420p --file=/dev/video0; fi";
+        interval = 1;
+      };
+      "custom/mirror" = {
+        format = "{}";
+        return-type = "json";
+        exec = "if [ $(${pkgs.procps}/bin/pidof wl-mirror > /dev/null && echo true) ]; then printf '{\"text\":\"\",\"class\":\"enabled\"}' ; else printf '{\"text\":\"\"}' ; fi";
+        on-click = "if [ $(${pkgs.procps}/bin/pidof wl-mirror > /dev/null && echo true) ]; then pkill -9 wl-mirror; else wl-mirror $(swaymsg -t get_workspaces | jq -r '.[] | select(.focused==true).output'); fi";
         interval = 1;
       };
       "custom/mpd1" = {

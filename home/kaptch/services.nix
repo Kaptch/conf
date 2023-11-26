@@ -21,6 +21,9 @@
 
   programs.ncmpcpp = {
     enable = true;
+    settings = {
+      allow_for_physical_item_deletion = true;
+    };
   };
 
   programs.newsboat = {
@@ -184,10 +187,10 @@
   services.swayidle = {
     enable = true;
     extraArgs = [ "-d" ];
-    systemdTarget = "hyprland-session.target";
+    systemdTarget = "sway-session.target";
     timeouts = [
-      { timeout = 2400; command = "hyprctl dispatch dpms off"; resumeCommand = "hyprctl dispatch dpms on"; }
-      # { timeout = 2400; command = "swaymsg 'output * dpms off'"; resumeCommand = "swaymsg 'output * dpms on'"; }
+      # { timeout = 2400; command = "hyprctl dispatch dpms off"; resumeCommand = "hyprctl dispatch dpms on"; }
+      { timeout = 2400; command = "swaymsg 'output * dpms off'"; resumeCommand = "swaymsg 'output * dpms on'"; }
       { timeout = 3600; command = "${pkgs.elogind}/bin/loginctl hybrid-sleep"; }
     ];
     events = [
@@ -204,6 +207,7 @@
         outputs = [
           {
             criteria = "eDP-1";
+            status = "enable";
           }
         ];
       };
@@ -215,6 +219,8 @@
           }
           {
             criteria = "HDMI-A-1";
+            status = "enable";
+            position = "0,0";
           }
         ];
       };
